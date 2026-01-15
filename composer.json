@@ -1,0 +1,40 @@
+{
+  "name": "neonlines/fkl",
+  "description": "Some plugin description",
+  "type": "shopware-platform-plugin",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "neonlines"
+    }
+  ],
+  "require": {
+    "shopware/core": "~6.4"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Fkl\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "Fkl\\DerFeinkaufsladen",
+    "copyright": "neonlines",
+    "label": {
+      "de-DE": "DerFeinkaufsladen",
+      "en-GB": "DerFeinkaufsladen"
+    },
+    "description": {
+      "de-DE": "Some plugin description",
+      "en-GB": "Some plugin description"
+    },
+    "manufacturerLink": {
+      "de-DE": "https://acme.org",
+      "en-GB": "https://acme.org"
+    },
+    "supportLink": {
+      "de-DE": "https://acme.org",
+      "en-GB": "https://acme.org"
+    }
+  }
+}

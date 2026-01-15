@@ -1,0 +1,18 @@
+{% sw_extends "@Storefront/storefront/component/buy-widget/configurator.html.twig" %}
+
+{% block buy_widget_configurator_option_radio %}
+    {{ parent() }}
+    {% set discountData = page.extensions.fklOptionDiscounts %}
+    {% if discountData and discountData.hasDiscount(option.id) %}
+        {% set discount = discountData.getDiscountForOption(option.id) %}
+        {% if discount %}
+            <span class="badge bg-danger ms-1" style="position: absolute; top: -10px; z-index: 1; right: -10px;">
+                {% if discount.isExact %}
+                    -{{ discount.percentage|round }}%
+                {% else %}
+                    bis zu -{{ discount.percentage|round }}%
+                {% endif %}
+            </span>
+        {% endif %}
+    {% endif %}
+{% endblock %}
