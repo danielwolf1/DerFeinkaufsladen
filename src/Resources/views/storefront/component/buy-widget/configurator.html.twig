@@ -8,9 +8,9 @@
         {% if discount %}
             <span class="badge bg-danger ms-1" style="position: absolute; top: -10px; z-index: 1; right: -10px;">
                 {% if discount.isExact %}
-                    -{{ discount.percentage|round }}%
+                    {{ 'fkl.configurator.discountExact'|trans({'%percentage%': discount.percentage|round}) }}
                 {% else %}
-                    bis zu -{{ discount.percentage|round }}%
+                    {{ 'fkl.configurator.discountUpTo'|trans({'%percentage%': discount.percentage|round}) }}
                 {% endif %}
             </span>
         {% endif %}

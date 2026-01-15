@@ -1,0 +1,8 @@
+{
+    "fkl": {
+        "configurator": {
+            "discountExact": "-%percentage%%",
+            "discountUpTo": "bis zu -%percentage%%"
+        }
+    }
+}

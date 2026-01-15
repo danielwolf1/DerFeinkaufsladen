@@ -35,14 +35,4 @@ class OptionDiscountData extends Struct
     {
         return isset($this->discounts[$optionId]);
     }
-
-    public function getOptionGroupCount(): int
-    {
-        return $this->optionGroupCount;
-    }
-
-    public function hasMultipleGroups(): bool
-    {
-        return $this->optionGroupCount > 1;
-    }
 }
