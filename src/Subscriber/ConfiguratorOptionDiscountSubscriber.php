@@ -33,32 +33,36 @@ class ConfiguratorOptionDiscountSubscriber implements EventSubscriberInterface
 
     public function onProductPageLoaded(ProductPageLoadedEvent $event): void
     {
-        $page = $event->getPage();
-        $product = $page->getProduct();
-        $configuratorSettings = $page->getConfiguratorSettings();
+        try {
+            $page = $event->getPage();
+            $product = $page->getProduct();
+            $configuratorSettings = $page->getConfiguratorSettings();
 
-        if ($configuratorSettings === null || $configuratorSettings->count() === 0) {
-            return;
+            if ($configuratorSettings === null || $configuratorSettings->count() === 0) {
+                return;
+            }
+
+            $parentId = $product->getParentId() ?? $product->getId();
+
+            $variants = $this->loadAllVariants($parentId, $event->getSalesChannelContext());
+
+            if ($variants->count() === 0) {
+                return;
+            }
+
+            $optionGroupCount = $configuratorSettings->count();
+            $discountMap = $this->buildDiscountMap($variants, $optionGroupCount);
+
+            if (empty($discountMap)) {
+                return;
+            }
+
+            $optionDiscountData = new OptionDiscountData($discountMap, $optionGroupCount);
+
+            $page->addExtension(self::EXTENSION_NAME, $optionDiscountData);
+        }catch (\Exception $exception){
+            // silently fail to not break product page loading
         }
-
-        $parentId = $product->getParentId() ?? $product->getId();
-
-        $variants = $this->loadAllVariants($parentId, $event->getSalesChannelContext());
-
-        if ($variants->count() === 0) {
-            return;
-        }
-
-        $optionGroupCount = $configuratorSettings->count();
-        $discountMap = $this->buildDiscountMap($variants, $optionGroupCount);
-
-        if (empty($discountMap)) {
-            return;
-        }
-
-        $optionDiscountData = new OptionDiscountData($discountMap, $optionGroupCount);
-
-        $page->addExtension(self::EXTENSION_NAME, $optionDiscountData);
     }
 
     private function loadAllVariants(string $parentId, SalesChannelContext $context): ProductCollection
